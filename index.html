@@ -1,50 +1,154 @@
-<!DOCKTYPE html>
-<html lang="es"
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <meta charset="UTF-8"
-    <title>Generador de contraseñas</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Contraseñas</title>
     <style>
+        /* Estilos generales del fondo y la fuente */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Ocupa todo el alto de la pantalla */
+            margin: 0;
+        }
+
+        /* Contenedor principal (Diseño de Tarjeta) */
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 320px;
+        }
+
+        h2 {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 22px;
+            margin-bottom: 25px;
         }
-        input, button {
-            padding: 8px;
-            margin: 5px;
-            front-size: 16px;
-        }
-        #resultado {
+
+        /* Estilos de los controles (Longitud) */
+        .control-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
             font-weight: bold;
-            margin-top: 15px;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 8px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            border-color: #667eea;
+        }
+
+        /* Estilos de los Checkboxes */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .checkbox-group label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            color: #4a5568;
+        }
+
+        /* Checkbox personalizado (básico) */
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #667eea; /* Cambia el color del check por defecto */
+        }
+
+        /* Botón de generar */
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        button:hover {
+            background-color: #5a6cd6;
+        }
+
+        button:active {
+            transform: scale(0.98); /* Pequeño efecto al hacer clic */
+        }
+
+        /* Caja del resultado */
+        #resultado {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #f7fafc;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #2d3748;
             word-break: break-all;
+            text-align: center;
+            min-height: 22px;
+            border: 2px dashed #cbd5e0;
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
     
-    <h2>Generador de contraseñas 🔐</h2>
-    
-    <label>
-        Longitud
-        <input type="number" id="longitud" min="4" max="14" value="12"
-    </label>
-    <br>
+    <div class="container">
+        <h2>Generador de contraseñas 🔐</h2>
+        
+        <div class="control-group">
+            <label for="longitud">Longitud</label>
+            <input type="number" id="longitud" min="4" max="30" value="12">
+        </div>
 
-    <label>
-        <input type="checkbox" id="mayus" checked> mayus
-    </label>
-    <label>
-        <input type="checkbox" id="numeros" checked> number
-    </label>
-    <label>
-        <input type="checkbox" id="simbolos" checked> simbolos
-    </label>
-    <br>
+        <div class="checkbox-group">
+            <label>
+                <input type="checkbox" id="mayus" checked> Incluir Mayúsculas
+            </label>
+            <label>
+                <input type="checkbox" id="numeros" checked> Incluir Números
+            </label>
+            <label>
+                <input type="checkbox" id="simbolos" checked> Incluir Símbolos
+            </label>
+        </div>
 
-    <button onclick="generarPassword()">Generar</button>
+        <button onclick="generarPassword()">Generar</button>
 
-    <div id="resultado"></div>
+        <div id="resultado">...</div>
+    </div>
 
     <script>
         function generarPassword() {
@@ -53,20 +157,25 @@
             const IncluirNumeros = document.getElementById("numeros").checked;
             const IncluirSimbolos = document.getElementById("simbolos").checked;
 
-            let caracteres = "abcdefghijklmnñopqrstuvwxyz"
-            if (IncluirMayus) caracteres += "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
-            if (IncluirNumeros) caracteres += "1234567890"
-            if (IncluirSimbolos) caracteres += "·$%&/()=_+-"
+            let caracteres = "abcdefghijklmnñopqrstuvwxyz";
+            if (IncluirMayus) caracteres += "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+            if (IncluirNumeros) caracteres += "1234567890";
+            if (IncluirSimbolos) caracteres += "·$%&/()=_+-";
 
+            // Mostrar un mensaje si no se selecciona nada
             if (caracteres.length === 0) {
-                document.getElementById("resultado").innerText = "Seleccionar al menos una opcion";
+                document.getElementById("resultado").innerText = "Elige una opción ❌";
+                document.getElementById("resultado").style.color = "red";
                 return;
             }
 
+            // Restaurar color original en caso de que antes hubiera un error
+            document.getElementById("resultado").style.color = "#2d3748"; 
+
             let password = "";
-            for (let i = 0; i< longitud; i++) {
-                const randonIndex = Math.floor(Math.random() * caracteres.length);
-                password += caracteres[randonIndex];
+            for (let i = 0; i < longitud; i++) {
+                const randomIndex = Math.floor(Math.random() * caracteres.length);
+                password += caracteres[randomIndex];
             }
 
             document.getElementById("resultado").innerText = password;
