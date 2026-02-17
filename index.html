@@ -1,0 +1,77 @@
+<!DOCKTYPE html>
+<html lang="es"
+<head>
+    <meta charset="UTF-8"
+    <title>Generador de contraseñas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px;
+            front-size: 16px;
+        }
+        #resultado {
+            font-weight: bold;
+            margin-top: 15px;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    
+    <h2>Generador de contraseñas 🔐</h2>
+    
+    <label>
+        Longitud
+        <input type="number" id="longitud" min="4" max="14" value="12"
+    </label>
+    <br>
+
+    <label>
+        <input type="checkbox" id="mayus" checked> mayus
+    </label>
+    <label>
+        <input type="checkbox" id="numeros" checked> number
+    </label>
+    <label>
+        <input type="checkbox" id="simbolos" checked> simbolos
+    </label>
+    <br>
+
+    <button onclick="generarPassword()">Generar</button>
+
+    <div id="resultado"></div>
+
+    <script>
+        function generarPassword() {
+            const longitud = document.getElementById("longitud").value;
+            const IncluirMayus = document.getElementById("mayus").checked;
+            const IncluirNumeros = document.getElementById("numeros").checked;
+            const IncluirSimbolos = document.getElementById("simbolos").checked;
+
+            let caracteres = "abcdefghijklmnñopqrstuvwxyz"
+            if (IncluirMayus) caracteres += "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+            if (IncluirNumeros) caracteres += "1234567890"
+            if (IncluirSimbolos) caracteres += "·$%&/()=_+-"
+
+            if (caracteres.length === 0) {
+                document.getElementById("resultado").innerText = "Seleccionar al menos una opcion";
+                return;
+            }
+
+            let password = "";
+            for (let i = 0; i< longitud; i++) {
+                const randonIndex = Math.floor(Math.random() * caracteres.length);
+                password += caracteres[randonIndex];
+            }
+
+            document.getElementById("resultado").innerText = password;
+        }
+    </script>
+
+</body>
+</html>
